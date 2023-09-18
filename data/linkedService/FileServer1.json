@@ -1,0 +1,17 @@
+{
+	"name": "FileServer1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\\\Users\\\\mahip\\\\OneDrive\\\\Desktop\\\\documents",
+			"userId": "mahipalreddy.kommera@outlook.com",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiZTU0MWZhNS00ZWY0LTQ2OTItOGUxMS0xN2JhNjdiZmFmNDIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IRSelfHosted",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

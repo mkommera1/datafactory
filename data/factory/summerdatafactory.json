@@ -1,0 +1,15 @@
+{
+	"name": "summerdatafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "236bd8d4-b77d-4b3f-8a30-c5d322a39783",
+		"tenantId": "5bf83608-f9c6-4cd1-aa4e-6eab2e4f1cc3",
+		"userAssignedIdentities": {
+			"/subscriptions/5025ddd4-d691-4214-b5dc-b64ef7bdcb33/resourcegroups/training_resourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/User_assigned_managed_identity": {
+				"clientId": "be18cae5-6f91-41ae-8aa2-edff92a4b43d",
+				"principalId": "ee19ecf9-09a8-4667-98a1-057a0ba9ae5a"
+			}
+		}
+	}
+}

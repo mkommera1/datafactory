@@ -1,0 +1,29 @@
+{
+	"name": "mergesfiles",
+	"properties": {
+		"activities": [
+			{
+				"name": "Validation_activity",
+				"type": "Validation",
+				"dependsOn": [],
+				"userProperties": [
+					{
+						"name": "new_variable",
+						"value": "abc"
+					}
+				],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"timeout": "0.12:00:00",
+					"sleep": 10
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-09-04T16:44:52Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

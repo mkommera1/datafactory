@@ -1,0 +1,78 @@
+{
+	"name": "customersfiletoazuresql",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "df_customers_txt",
+						"type": "DatasetReference"
+					},
+					"name": "customerssource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "df_azuresql_customers",
+						"type": "DatasetReference"
+					},
+					"name": "sqlservercustomers"
+				}
+			],
+			"transformations": [
+				{
+					"name": "customersderived"
+				},
+				{
+					"name": "AlterRow"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as string,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> customerssource",
+				"customerssource derive(etldate = currentTimestamp()) ~> customersderived",
+				"customersderived alterRow(upsertIf(true())) ~> AlterRow",
+				"AlterRow sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          lastmodifieddatetime as timestamp,",
+				"          etldatetime as timestamp,",
+				"          surr_key as integer,",
+				"          is_active as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['CustomerID'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CustomerID,",
+				"          FirstName,",
+				"          LastName,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          etldatetime = etldate",
+				"     )) ~> sqlservercustomers"
+			]
+		}
+	}
+}

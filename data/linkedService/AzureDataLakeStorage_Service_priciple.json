@@ -1,0 +1,15 @@
+{
+	"name": "AzureDataLakeStorage_Service_priciple",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://summnertraining630.dfs.core.windows.net/",
+			"tenant": "5bf83608-f9c6-4cd1-aa4e-6eab2e4f1cc3",
+			"servicePrincipalId": "eb9b053d-5800-4c63-952f-350c8662283b",
+			"servicePrincipalCredentialType": "ServicePrincipalKey",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDQzRDM5MjIzLURBRDAtNDRCMS05MkQyLUQ1MkVFRTQ2Qjg4OF83ZWI2Y2ZhYi0zNTViLTQyZTktYmQxZC02NDE0NmNlNjU3NWYiDQp9"
+		}
+	}
+}

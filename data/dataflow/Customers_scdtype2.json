@@ -1,0 +1,189 @@
+{
+	"name": "Customers_scdtype2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "df_customers_txt",
+						"type": "DatasetReference"
+					},
+					"name": "adlssource"
+				},
+				{
+					"dataset": {
+						"referenceName": "df_azuresql_customers",
+						"type": "DatasetReference"
+					},
+					"name": "azuresqlservercustomersdata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "df_azuresql_customers",
+						"type": "DatasetReference"
+					},
+					"name": "azuresqlserver"
+				},
+				{
+					"dataset": {
+						"referenceName": "df_azuresql_customers",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "deriveisactive"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> adlssource",
+				"source(output(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          lastmodifieddatetime as timestamp,",
+				"          etldatetime as timestamp,",
+				"          surr_key as integer,",
+				"          is_active as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'SERIALIZABLE',",
+				"     format: 'table') ~> azuresqlservercustomersdata",
+				"adlssource derive(is_active = 1,",
+				"          etltime = currentTimestamp()) ~> deriveisactive",
+				"azuresqlservercustomersdata select(mapColumn(",
+				"          CustomerID_azure = CustomerID,",
+				"          FirstName_azure = FirstName,",
+				"          LastName_azure = LastName,",
+				"          Email_azure = Email,",
+				"          PhoneNumber_azure = PhoneNumber,",
+				"          surr_key_azure = surr_key,",
+				"          is_active_azure = is_active",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"adlssource, select1 lookup(CustomerID == CustomerID_azure,",
+				"     multiple: true,",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 filter(!isNull(CustomerID_azure)) ~> filter1",
+				"select2 alterRow(updateIf(true())) ~> alterRow1",
+				"filter1 derive(etltime = currentTimestamp(),",
+				"          is_active_azure = 0) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          CustomerID,",
+				"          FirstName,",
+				"          LastName,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          CustomerID_azure,",
+				"          FirstName_azure,",
+				"          LastName_azure,",
+				"          Email_azure,",
+				"          PhoneNumber_azure,",
+				"          surr_key = surr_key_azure,",
+				"          is_active_azure,",
+				"          etltime",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"deriveisactive sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          lastmodifieddatetime as timestamp,",
+				"          etldatetime as timestamp,",
+				"          surr_key as integer,",
+				"          is_active as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CustomerID,",
+				"          FirstName,",
+				"          LastName,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          etldatetime = etltime,",
+				"          is_active",
+				"     )) ~> azuresqlserver",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          lastmodifieddatetime as timestamp,",
+				"          etldatetime as timestamp,",
+				"          surr_key as integer,",
+				"          is_active as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:[(\"surr_key\")],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          etldatetime = etltime,",
+				"          surr_key,",
+				"          is_active = is_active_azure,",
+				"          CustomerID,",
+				"          FirstName,",
+				"          LastName,",
+				"          Email,",
+				"          PhoneNumber",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

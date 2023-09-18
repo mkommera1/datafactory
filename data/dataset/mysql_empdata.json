@@ -1,0 +1,16 @@
+{
+	"name": "mysql_empdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MySql_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`emp`"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
