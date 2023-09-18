@@ -18,6 +18,26 @@
 					"url": "https://reqres.in/api/users?page=1",
 					"method": "GET"
 				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Web1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Web1').output.total_pages",
+						"type": "Expression"
+					},
+					"batchCount": 1
+				}
 			}
 		],
 		"annotations": [],
