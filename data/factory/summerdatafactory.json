@@ -1,5 +1,13 @@
 {
 	"name": "summerdatafactory",
+	"properties": {
+		"globalParameters": {
+			"local_hostname": {
+				"type": "string",
+				"value": "localhost"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned,UserAssigned",
