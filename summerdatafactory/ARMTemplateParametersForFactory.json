@@ -1,0 +1,57 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "summerdatafactory"
+		},
+		"ADLSGen2_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_Service_priciple_servicePrincipalCredential": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"Azuresql_target_connectionString": {
+			"value": ""
+		},
+		"FileServer1_password": {
+			"value": ""
+		},
+		"MySql1_connectionString": {
+			"value": ""
+		},
+		"MySql_ecomdb_connectionString": {
+			"value": ""
+		},
+		"MySql_onprem_connectionString": {
+			"value": ""
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"value": "https://summnertraining630.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://summnertraining630.dfs.core.windows.net"
+		},
+		"AzureDataLakeStorage_Service_priciple_properties_typeProperties_url": {
+			"value": "https://summnertraining630.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage_Service_priciple_properties_typeProperties_tenant": {
+			"value": "5bf83608-f9c6-4cd1-aa4e-6eab2e4f1cc3"
+		},
+		"AzureDataLakeStorage_Service_priciple_properties_typeProperties_servicePrincipalId": {
+			"value": "eb9b053d-5800-4c63-952f-350c8662283b"
+		},
+		"FileServer1_properties_typeProperties_host": {
+			"value": "C:\\\\Users\\\\mahip\\\\OneDrive\\\\Desktop\\\\documents"
+		},
+		"FileServer1_properties_typeProperties_userId": {
+			"value": "mahipalreddy.kommera@outlook.com"
+		}
+	}
+}
